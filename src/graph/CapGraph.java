@@ -69,8 +69,7 @@ public class CapGraph implements Graph {
 	
 	public static void main(String[] args){
 		CapGraph testGraph = new CapGraph();
-		GraphLoader graphLoader = new GraphLoader();
-		graphLoader.loadGraph(testGraph, "data/facebook_1000.txt");
+		GraphLoader.loadGraph(testGraph, "data/facebook_1000.txt");
 		System.out.println(testGraph.exportGraph());
 	}
 
