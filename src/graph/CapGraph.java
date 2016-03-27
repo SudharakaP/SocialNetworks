@@ -21,7 +21,7 @@ public class CapGraph implements Graph {
 	private int numVertices;
 	private int numEdges;
 	
-	private HashMap<Integer, HashSet<Integer>> adjList = new HashMap<Integer, HashSet<Integer>>();
+	private Map<Integer, HashSet<Integer>> adjList = new HashMap<Integer, HashSet<Integer>>();
 	
 	/* (non-Javadoc)
 	 * @see graph.Graph#addVertex(int)
@@ -64,7 +64,7 @@ public class CapGraph implements Graph {
 	 */
 	@Override
 	public HashMap<Integer, HashSet<Integer>> exportGraph() {
-		return adjList;
+		return (HashMap<Integer, HashSet<Integer>>)adjList;
 	}
 	
 	public static void main(String[] args){
