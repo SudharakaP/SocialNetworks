@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import util.GraphLoader;
+
 /**
  * @author Sudharaka Palamakumbura
  * 
@@ -67,17 +69,9 @@ public class CapGraph implements Graph {
 	
 	public static void main(String[] args){
 		CapGraph testGraph = new CapGraph();
-		testGraph.addVertex(1);
-		testGraph.addVertex(2);
-		testGraph.addVertex(3);
-		testGraph.addVertex(4);
-		testGraph.addVertex(5);
-		
-		testGraph.addEdge(1, 4);
-		testGraph.addEdge(2, 3);
-		testGraph.addEdge(4, 1);
-		
-	    System.out.println(testGraph.exportGraph());
+		GraphLoader graphLoader = new GraphLoader();
+		graphLoader.loadGraph(testGraph, "data/facebook_1000.txt");
+		System.out.println(testGraph.exportGraph());
 	}
 
 }
