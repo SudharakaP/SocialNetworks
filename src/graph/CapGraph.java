@@ -46,8 +46,23 @@ public class CapGraph implements Graph {
 	 */
 	@Override
 	public Graph getEgonet(int center) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		// If "center" is not contained in graph return empty graph
+		if (!adjList.containsKey(center)) 
+			return new CapGraph();
+		
+		CapGraph egonet = new CapGraph();
+		egonet.addVertex(center);
+		
+		for (Integer vertex: adjList.get(center))
+			egonet.addVertex(vertex);
+		
+		for (Integer from: egonet.adjList.keySet())
+			for (Integer to: egonet.adjList.keySet())
+				if (adjList.get(from).contains(to))
+					egonet.addEdge(from, to);
+	
+		return egonet;
 	}
 
 	/* (non-Javadoc)

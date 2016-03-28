@@ -2,11 +2,6 @@ package graph;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,24 +24,33 @@ public class CapGraphTest {
 		 testGraph.addEdge(4, 1);
 		 testGraph.addEdge(2, 3);
 		 testGraph.addEdge(2, 4);
+		 testGraph.addEdge(3, 4);
  
 	}
 
 	@Test
 	public void testAddVertex() { 
-		assertEquals("Null input fail", 5, testGraph.exportGraph().size());
+		assertEquals("Size before adding vertex", 5, testGraph.exportGraph().size());
 		testGraph.addVertex(6);
-		assertEquals("Null input fail", 6, testGraph.exportGraph().size());
+		assertEquals("Size after adding vertex", 6, testGraph.exportGraph().size());
 	}
 
 	@Test
 	public void testAddEdge() {
-		fail("Not yet implemented");
+		assertEquals("Before adding edge 1 to 5", false, testGraph.exportGraph().get(1).contains(5));
+		testGraph.addEdge(1, 5);
+		assertEquals("After adding edge 1 to 5", true, testGraph.exportGraph().get(1).contains(5));
 	}
 
 	@Test
 	public void testGetEgonet() {
-		fail("Not yet implemented");
+		Graph newgraph = testGraph.getEgonet(2);
+		assertEquals("Test egonet correctness", 4, newgraph.exportGraph().size());
+		assertEquals("Test egonet correctness", true, newgraph.exportGraph().get(2).contains(3));
+		assertEquals("Test egonet correctness", true, newgraph.exportGraph().get(2).contains(4));
+		assertEquals("Test egonet correctness", true, newgraph.exportGraph().get(2).contains(5));
+		assertEquals("Test egonet correctness", true, newgraph.exportGraph().get(3).contains(4));
+		assertEquals("Test egonet correctness", false, newgraph.exportGraph().get(3).contains(5));
 	}
 
 	@Test
@@ -56,6 +60,7 @@ public class CapGraphTest {
 
 	@Test
 	public void testExportGraph() {
-		fail("Not yet implemented");
+		Integer[] test = {3,4};
+		assertArrayEquals("Check for correct edges", test, testGraph.exportGraph().get(1).toArray());
 	}
 }
