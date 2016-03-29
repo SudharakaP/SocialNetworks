@@ -17,9 +17,18 @@ import util.GraphLoader;
  *
  */
 public class CapGraph implements Graph {
+	
+	private int size;
 
 	private Map<Integer, HashSet<Integer>> adjList = new HashMap<Integer, HashSet<Integer>>();
-	private List<Graph> stronglyConnected = new ArrayList<Graph>();
+	private List<CapGraph> stronglyConnected = new ArrayList<CapGraph>();
+	
+	/**
+	 * @return the size of the graph
+	 */
+	public int getSize() {
+		return size;
+	}
 	
 	/* (non-Javadoc)
 	 * @see graph.Graph#addVertex(int)
@@ -27,6 +36,7 @@ public class CapGraph implements Graph {
 	@Override
 	public void addVertex(int num) {
 		adjList.put(num, new HashSet<Integer>());
+		size++;
 	}
 
 	/* (non-Javadoc)
@@ -74,8 +84,9 @@ public class CapGraph implements Graph {
 		CapGraph transpose = this.graphTanspose();
 		
 		transpose.DFS(finished, true);
-		System.out.println(this.stronglyConnected);
-		return stronglyConnected;
+		
+		System.out.println(transpose.stronglyConnected.get(2).exportGraph());
+		return null;
 		
 	}
 
@@ -99,29 +110,17 @@ public class CapGraph implements Graph {
 	public Stack<Integer> DFS(Stack<Integer> vertices, boolean strongCon){
 		HashSet<Integer> visited = new HashSet<Integer>();
 		Stack<Integer> finished = new Stack<Integer>();
-		HashSet<Integer> scc = new HashSet<Integer>();
 		
 		while (!vertices.isEmpty()){
 			Integer v = vertices.pop();
 			
-			if (!visited.contains(v))
-				scc = DFSVisit(v, visited, finished);
-				
-			// piece together the strongly connected components, if strongCon == true
-			if (strongCon){
-				
-				CapGraph graph = new CapGraph();
-				// add all the vertices of the strongly connected components
-				for (Integer vertex: scc)
-					graph.addVertex(vertex);
-				
-				// add all the edges of the strongly connected components
-				for (Integer vertex: scc)
-					for (Integer a: adjList.get(vertex))
-						graph.addEdge(vertex, a);
-				
-				stronglyConnected.add(graph);
-			}			
+			if (!visited.contains(v)){
+				DFSVisit(v, visited, finished);
+
+				if (strongCon){			
+				    stronglyConnected(finished);
+				}
+			}
 		}
 		return finished;
 	}
@@ -133,18 +132,37 @@ public class CapGraph implements Graph {
 	 * @param visited 
 	 * @param finished
 	 */
-	public HashSet<Integer> DFSVisit(Integer vertex, HashSet<Integer> visited, Stack<Integer> finished){
+	public void DFSVisit(Integer vertex, HashSet<Integer> visited, Stack<Integer> finished){
 		
-		HashSet<Integer> strongConn = new HashSet<Integer>();
 		visited.add(vertex);
-		strongConn.add(vertex);
 		
 		for (Integer n: exportGraph().get(vertex))
 			if (!visited.contains(n))
 				DFSVisit(n, visited, finished);
 		
 		finished.push(vertex);
-		return strongConn;
+	}
+	
+	public void stronglyConnected(Stack<Integer> finished){
+		
+		// piece together the strongly connected components
+		CapGraph graph = new CapGraph();
+		List<Integer> vertices = new ArrayList<Integer>();
+		int sizeSCG = stronglyConnected.size();
+	
+		for (int i = stronglyConnected.get(sizeSCG - 1).getSize(); i < finished.size(); i++)
+			vertices.add(finished.get(i));
+		
+		// add all the vertices of the strongly connected components
+		for (Integer vertex: vertices)
+			graph.addVertex(vertex);
+		
+		// add all the edges of the strongly connected components
+		for (Integer vertex: vertices)
+			for (Integer a: adjList.get(vertex))
+				graph.addEdge(vertex, a);
+		
+		stronglyConnected.add(graph);
 	}
 	
 	// returns the list of vertices of the graph
@@ -187,5 +205,7 @@ public class CapGraph implements Graph {
 		GraphLoader.loadGraph(testGraph, "data/facebook_1000.txt");
 		System.out.println(testGraph.exportGraph());
 	}
+
+
 
 }
