@@ -3,60 +3,76 @@ package graph;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
 import util.GraphLoader;
 
+/**
+ * Test Class for CapGraph.java
+ * 
+ * @author Sudharaka Palamakumbura
+ *
+ */
 public class CapGraphTest {
 	
 	CapGraph testGraph;
 
 	@Before
 	public void setUp() throws Exception {
-		 testGraph = new CapGraph();
-		 testGraph.addVertex(1);
-		 testGraph.addVertex(2);
-		 testGraph.addVertex(3);
-		 testGraph.addVertex(4);
-		 testGraph.addVertex(5);
-		 
-		 testGraph.addEdge(1, 4);
-		 testGraph.addEdge(1, 3);
-		 testGraph.addEdge(2, 5);
-		 testGraph.addEdge(4, 1);
-		 testGraph.addEdge(2, 3);
-		 testGraph.addEdge(2, 4);
-		 testGraph.addEdge(3, 4);
+		testGraph = new CapGraph();
+		testGraph.addVertex(32);
+		testGraph.addVertex(50);
+		testGraph.addVertex(44);
+		testGraph.addVertex(25);
+		testGraph.addVertex(23);
+		testGraph.addVertex(65);
+		testGraph.addVertex(18);
+		
+		testGraph.addEdge(32, 50);
+		testGraph.addEdge(32, 44);
+		testGraph.addEdge(44, 50);
+		
+		testGraph.addEdge(25, 23);
+		testGraph.addEdge(25, 65);
+		testGraph.addEdge(25, 18);
+		
+		testGraph.addEdge(65, 23);
+		testGraph.addEdge(44, 18);
+		testGraph.addEdge(18, 23);
+		testGraph.addEdge(23, 25);
+		testGraph.addEdge(23, 18);
  
 	}
 
 	@Test
 	public void testAddVertex() { 
-		assertEquals("Size before adding vertex", 5, testGraph.exportGraph().size());
+		assertEquals("Size before adding vertex", 7, testGraph.exportGraph().size());
 		testGraph.addVertex(6);
-		assertEquals("Size after adding vertex", 6, testGraph.exportGraph().size());
+		assertEquals("Size after adding vertex", 8, testGraph.exportGraph().size());
 	}
 
 	@Test
 	public void testAddEdge() {
-		assertEquals("Before adding edge 1 to 5", false, testGraph.exportGraph().get(1).contains(5));
-		testGraph.addEdge(1, 5);
-		assertEquals("After adding edge 1 to 5", true, testGraph.exportGraph().get(1).contains(5));
+		assertEquals("Before adding edge 18 to 50", false, testGraph.exportGraph().get(18).contains(50));
+		testGraph.addEdge(18, 50);
+		assertEquals("After adding edge 18 to 50", true, testGraph.exportGraph().get(18).contains(50));
 	}
 
 	@Test
 	public void testGetEgonet() {
 		
 		// test for correctness of egonet centered at 2
-		Graph newgraph = testGraph.getEgonet(2);
-		assertEquals("Test for egonet of 2", 4, newgraph.exportGraph().size());
-		assertEquals("Test for egonet of 2", true, newgraph.exportGraph().get(2).contains(3));
-		assertEquals("Test for egonet of 2", true, newgraph.exportGraph().get(2).contains(4));
-		assertEquals("Test for egonet of 2", true, newgraph.exportGraph().get(2).contains(5));
-		assertEquals("Test for egonet of 2", true, newgraph.exportGraph().get(3).contains(4));
-		assertEquals("Test for egonet of 2", false, newgraph.exportGraph().get(3).contains(5));
+		Graph newgraph = testGraph.getEgonet(25);
+		assertEquals("Test for egonet of 25", 4, newgraph.exportGraph().size());
+		assertEquals("Test for egonet of 25", true, newgraph.exportGraph().get(25).contains(23));
+		assertEquals("Test for egonet of 25", true, newgraph.exportGraph().get(25).contains(18));
+		assertEquals("Test for egonet of 25", true, newgraph.exportGraph().get(25).contains(65));
+		assertEquals("Test for egonet of 25", true, newgraph.exportGraph().get(18).contains(23));
+		assertEquals("Test for egonet of 25", true, newgraph.exportGraph().get(65).contains(23));
+		assertEquals("Test for egonet of 25", false, newgraph.exportGraph().get(65).contains(25));
 		
 		// test for empty graph when egonet vertex is not in the graph
 		Graph nullgraph = testGraph.getEgonet(10);
@@ -87,34 +103,25 @@ public class CapGraphTest {
 
 	@Test
 	public void testExportGraph() {
-		Integer[] test = {3,4};
-		assertArrayEquals("Check for correct edges", test, testGraph.exportGraph().get(1).toArray());
+		assertEquals("Check for correct vertices", true, testGraph.exportGraph().containsKey(32));
+		assertEquals("Check for correct vertices", true, testGraph.exportGraph().containsKey(50));
+		assertEquals("Check for correct vertices", true, testGraph.exportGraph().containsKey(44));
+		assertEquals("Check for correct vertices", true, testGraph.exportGraph().containsKey(25));
+		assertEquals("Check for correct vertices", true, testGraph.exportGraph().containsKey(23));
+		assertEquals("Check for correct vertices", true, testGraph.exportGraph().containsKey(18));
+		assertEquals("Check for correct vertices", true, testGraph.exportGraph().containsKey(65));
+		
+		HashSet<Integer> value = new HashSet<Integer>();
+		value.add(65);
+		value.add(18);
+		value.add(23);
+		//System.out.println(testGraph.exportGraph().get(25));
+		//System.out.println(value);
+		assertEquals("Check for correct edges", true, testGraph.exportGraph().containsValue(value));
 	}
 	
 	@Test
 	public void testBFS(){
-		CapGraph testGraph = new CapGraph();
-		testGraph.addVertex(32);
-		testGraph.addVertex(50);
-		testGraph.addVertex(44);
-		testGraph.addVertex(25);
-		testGraph.addVertex(23);
-		testGraph.addVertex(65);
-		testGraph.addVertex(18);
-		
-		testGraph.addEdge(32, 50);
-		testGraph.addEdge(32, 44);
-		testGraph.addEdge(44, 50);
-		
-		testGraph.addEdge(25, 23);
-		testGraph.addEdge(25, 65);
-		testGraph.addEdge(25, 18);
-		
-		testGraph.addEdge(65, 23);
-		testGraph.addEdge(44, 18);
-		testGraph.addEdge(18, 23);
-		testGraph.addEdge(23, 25);
-		testGraph.addEdge(23, 18);
 		
 		assertEquals("Correct return size of BFS", 7, testGraph.DFS(testGraph.vertices(), false).size());
 		assertEquals("Correct return element of BFS", true, testGraph.DFS(testGraph.vertices(), false).contains(65));

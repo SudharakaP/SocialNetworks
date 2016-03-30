@@ -148,6 +148,14 @@ public class CapGraph implements Graph {
 		finished.push(vertex);
 	}
 	
+	
+	/**
+	 * Helper method of the DFS method. This method constructs the strongly
+	 * connected components of the graph and stores them in the stronglyConnected
+	 * field.
+	 *  
+	 * @param finished 
+	 */
 	public void stronglyConnected(Stack<Integer> finished){
 		
 		// piece together the strongly connected components
@@ -179,7 +187,10 @@ public class CapGraph implements Graph {
 		stronglyConnected.add(graph);
 	}
 	
-	// returns the list of vertices of the graph
+	
+	/**
+	 * @return Returns the vertices of a graph
+	 */
 	public Stack<Integer> vertices(){
 		Stack<Integer> vertices = new Stack<Integer>();
 		
