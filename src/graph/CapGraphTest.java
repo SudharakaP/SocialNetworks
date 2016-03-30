@@ -2,11 +2,12 @@ package graph;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import util.GraphLoader;
 
 public class CapGraphTest {
 	
@@ -67,36 +68,17 @@ public class CapGraphTest {
 	public void testGetSCCs() {
 		
 		CapGraph testGraph = new CapGraph();
-		testGraph.addVertex(32);
-		testGraph.addVertex(50);
-		testGraph.addVertex(44);
-		testGraph.addVertex(25);
-		testGraph.addVertex(23);
-		testGraph.addVertex(65);
-		testGraph.addVertex(18);
-		
-		testGraph.addEdge(32, 50);
-		testGraph.addEdge(32, 44);
-		testGraph.addEdge(44, 50);
-		
-		testGraph.addEdge(25, 23);
-		testGraph.addEdge(25, 65);
-		testGraph.addEdge(25, 18);
-		
-		testGraph.addEdge(65, 23);
-		testGraph.addEdge(44, 18);
-		testGraph.addEdge(18, 23);
-		testGraph.addEdge(23, 25);
-		testGraph.addEdge(23, 18);
-		
-		List<Graph> graphs = testGraph.getSCCs();
-		System.out.println(graphs.get(0).exportGraph());
-		System.out.println(graphs.get(1).exportGraph());
-		System.out.println(graphs.get(2).exportGraph());
-		System.out.println(graphs.get(3).exportGraph());
+		GraphLoader.loadGraph(testGraph, "data/scc/test_5.txt");
+		List<Graph> scc = new ArrayList<Graph>();
+		scc = testGraph.getSCCs();
+		System.out.println(scc.get(0).exportGraph());
+		System.out.println(scc.get(1).exportGraph());
+		System.out.println(scc.get(2).exportGraph());
+		System.out.println(scc.get(3).exportGraph());
+		System.out.println(scc.get(4).exportGraph());
 		
 		try {
-			System.out.println(graphs.get(4).exportGraph());
+			System.out.println(scc.get(5).exportGraph());
 	        fail("Expected an IndexOutOfBoundsException to be thrown");
 	    } catch (IndexOutOfBoundsException anIndexOutOfBoundsException) {
 	        

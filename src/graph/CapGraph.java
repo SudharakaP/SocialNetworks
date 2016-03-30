@@ -123,7 +123,7 @@ public class CapGraph implements Graph {
 			if (!visited.contains(v)){
 				DFSVisit(v, visited, finished);
 				
-				if (strongCon)		
+				if (strongCon)
 				    stronglyConnected(finished);
 			}
 		}
@@ -156,15 +156,17 @@ public class CapGraph implements Graph {
 		
 		int sizeSCG = stronglyConnected.size();
 		
-		int i = 0;
-		while (i < sizeSCG){
-			i += stronglyConnected.get(i).getSize();
+		int i = 0, j = 0;
+		while (j < sizeSCG){
+			i += stronglyConnected.get(j).getSize();
+			j++;
 		}
 		
 		while (i < finished.size()){
 			vertices.add(finished.get(i));
 			i++;
 		}
+		
 		// add all the vertices of the strongly connected components
 		for (Integer vertex: vertices)
 			graph.addVertex(vertex);
