@@ -85,9 +85,15 @@ public class CapGraph implements Graph {
 		
 		transpose.DFS(finished, true);
 		
-		System.out.println(transpose.stronglyConnected.get(2).exportGraph());
-		return null;
+		for (CapGraph graph: transpose.stronglyConnected)
+			this.stronglyConnected.add(graph.graphTanspose());
 		
+		List<Graph> stronglyConnectedGraphs = new ArrayList<Graph>();
+		
+		for (CapGraph graph: stronglyConnected)
+			stronglyConnectedGraphs.add(graph);
+		
+		return stronglyConnectedGraphs;
 	}
 
 	/* (non-Javadoc)
@@ -116,10 +122,9 @@ public class CapGraph implements Graph {
 			
 			if (!visited.contains(v)){
 				DFSVisit(v, visited, finished);
-
-				if (strongCon){			
+				
+				if (strongCon)		
 				    stronglyConnected(finished);
-				}
 			}
 		}
 		return finished;
@@ -148,11 +153,18 @@ public class CapGraph implements Graph {
 		// piece together the strongly connected components
 		CapGraph graph = new CapGraph();
 		List<Integer> vertices = new ArrayList<Integer>();
-		int sizeSCG = stronglyConnected.size();
-	
-		for (int i = stronglyConnected.get(sizeSCG - 1).getSize(); i < finished.size(); i++)
-			vertices.add(finished.get(i));
 		
+		int sizeSCG = stronglyConnected.size();
+		
+		int i = 0;
+		while (i < sizeSCG){
+			i += stronglyConnected.get(i).getSize();
+		}
+		
+		while (i < finished.size()){
+			vertices.add(finished.get(i));
+			i++;
+		}
 		// add all the vertices of the strongly connected components
 		for (Integer vertex: vertices)
 			graph.addVertex(vertex);
