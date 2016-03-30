@@ -115,8 +115,7 @@ public class CapGraphTest {
 		value.add(65);
 		value.add(18);
 		value.add(23);
-		//System.out.println(testGraph.exportGraph().get(25));
-		//System.out.println(value);
+		
 		assertEquals("Check for correct edges", true, testGraph.exportGraph().containsValue(value));
 	}
 	
