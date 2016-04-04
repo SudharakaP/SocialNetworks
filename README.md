@@ -16,7 +16,7 @@ Data files and information about them can be found in the data/ directory.
 ## Setup
 
 Importing Project into eclipse:
-	- Create a new Java Project in your workspace
-	- Import the starter files:
-	- File -> Import -> Select "File System" -> Next -> Browse and set 
+- Create a new Java Project in your workspace
+- Import the starter files:
+- File -> Import -> Select "File System" -> Next -> Browse and set 
 	  root directory to folder contents of zip were extracted to -> Finish
