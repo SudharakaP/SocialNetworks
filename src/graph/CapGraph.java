@@ -12,8 +12,9 @@ import util.GraphLoader;
 /**
  * @author Sudharaka Palamakumbura
  * 
- * For the warm up assignment, you must implement your Graph in a class
- * named CapGraph.  Here is the stub file.
+ * Implements a Graph. This class uses an adjacency list to represent
+ * the Graph's edges and vertices. Moreover it carries a list of 
+ * Strongly Connected Components of the graph.
  *
  */
 public class CapGraph implements Graph {

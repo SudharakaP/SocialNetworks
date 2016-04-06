@@ -4,6 +4,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
+/**
+ * @author Sudharaka Palamakumbura
+ * 
+ * Interface which defines a Graph object.
+ *
+ */
 public interface Graph {
     /* Creates a vertex with the given number. */
     public void addVertex(int num);
