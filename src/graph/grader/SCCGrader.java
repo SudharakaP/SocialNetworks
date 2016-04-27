@@ -9,7 +9,6 @@ package graph.grader;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.PrintWriter;
 import util.GraphLoader;
 import java.util.List;
 import java.util.Set;

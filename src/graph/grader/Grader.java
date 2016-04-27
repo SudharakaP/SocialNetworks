@@ -7,8 +7,6 @@
 
 package graph.grader;
 
-import java.io.PrintWriter;
-
 public abstract class Grader implements Runnable {
     public String feedback = "";
     public int correct = 0;
